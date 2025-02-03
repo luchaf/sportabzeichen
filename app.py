@@ -166,7 +166,7 @@ with tabs[0]:
         st.success("Performance data saved! Enter another record?")
         if st.button("Add Another Record"):
             st.session_state["data_written"] = False
-            st.experimental_rerun()
+            st.rerun()
     else:
         # Form Widgets
         name = st.text_input("Name", value=st.session_state["name"], key="name")
@@ -204,7 +204,7 @@ with tabs[0]:
             conn.update(worksheet=worksheet_name, data=updated_df)
             
             st.session_state["data_written"] = True
-            st.experimental_rerun()
+            st.rerun()
 
     # Display benchmark details for the selected discipline and age group.
     st.subheader(f"Benchmark for {discipline} ({age_group})")
