@@ -206,10 +206,19 @@ with tabs[0]:
             st.session_state["data_written"] = True
             st.rerun()
 
-    # Display benchmark details for the selected discipline and age group.
-    st.subheader(f"Benchmark for {discipline} ({age_group})")
-    bench_info = benchmarks[discipline]["data"][age_group]
-    if benchmarks[discipline]["lower_is_better"]:
+    # Retrieve the selected discipline and age group safely from session state
+    selected_discipline = st.session_state.get("discipline", list(benchmarks.keys())[0])
+    selected_age_group = st.session_state.get("age_group", age_groups[0])
+
+    # Display benchmark details for the selected discipline and age group
+    st.subheader(f"Benchmark for {selected_discipline} ({selected_age_group})")
+
+    # Retrieve benchmark info
+    bench_info = benchmarks[selected_discipline]["data"][selected_age_group]
+    unit = benchmarks[selected_discipline]["unit"]
+
+    # Display benchmark thresholds
+    if benchmarks[selected_discipline]["lower_is_better"]:
         st.write(f"Gold: {bench_info['Gold']} {unit} or less")
         st.write(f"Silber: {bench_info['Silber']} {unit} or less")
         st.write(f"Bronze: {bench_info['Bronze']} {unit} or less")
@@ -217,6 +226,9 @@ with tabs[0]:
         st.write(f"Bronze: {bench_info['Bronze']} {unit} or more")
         st.write(f"Silber: {bench_info['Silber']} {unit} or more")
         st.write(f"Gold: {bench_info['Gold']} {unit} or more")
+
+
+
 
 with tabs[1]:
     st.header("Recorded Performance Data")
